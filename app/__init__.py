@@ -7,6 +7,8 @@ from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_moment import Moment
+
 import os
 
 app = Flask(__name__)
@@ -16,6 +18,7 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = "login"
 mail = Mail(app)
+moment = Moment(app)
 
 if not app.debug:
     if app.config["MAIL_SERVER"]:
