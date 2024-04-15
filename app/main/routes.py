@@ -1,4 +1,3 @@
-from pip._vendor.html5lib import serialize
 from datetime import datetime, timezone
 from flask import render_template, flash, redirect, url_for, request, g, current_app
 from flask_login import current_user, login_required
