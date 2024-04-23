@@ -202,7 +202,7 @@ class User(UserMixin, db.Model):
         return db.session.scalars(query)
 
     def get_task_in_progress(self, name):
-        query = self.task.select().where(Task.name == name, Task.complete == False)
+        query = self.tasks.select().where(Task.name == name, Task.complete == False)
         return db.session.scalar(query)
 
 
@@ -263,7 +263,9 @@ class Task(db.Model):
     id: so.Mapped[str] = so.mapped_column(sa.String(36), primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(128), index=True)
     description: so.Mapped[Optional[str]] = so.mapped_column(sa.String(128))
-    user_id: so.Mapped[Optional[str]] = so.mapped_column(sa.String(128))
+    user_id: so.Mapped[int] = so.mapped_column(
+        sa.ForeignKey(User.id, name="fk_task_user_id")
+    )
     complete: so.Mapped[bool] = so.mapped_column(default=False)
     user: so.Mapped[User] = so.relationship(back_populates="tasks")
 
